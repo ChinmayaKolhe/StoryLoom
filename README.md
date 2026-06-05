@@ -1,4 +1,4 @@
-# 📚 Storyloom AI
+# Storyloom AI
 
 > Transform your real-life memories into beautiful illustrated storybooks using AI
 
@@ -11,18 +11,18 @@ Storyloom AI is a MERN-stack application that converts your personal memories an
 ![AI](https://img.shields.io/badge/AI-Groq%20%7C%20OpenAI-orange)
 ![Image Gen](https://img.shields.io/badge/Images-HuggingFace-yellow)
 
-## ✨ Features
+## Features
 
-- 📝 **Story Generation**: Describe your memory and AI creates a structured storybook using **Groq (Llama 3)**, **Google Gemini**, or **OpenAI**.
-- 🎨 **AI Illustrations**: Generate comic-style panels using **Stable Diffusion XL** or **RealCartoonXL** via Hugging Face (Free!).
-- 👤 **Custom Avatars**: Upload photos to create personalized character avatars.
-- 🎭 **Multiple Styles**: Choose from cartoon, anime, comic, realistic, watercolor, or sketch styles.
-- 📖 **PDF Export**: Download your storybook as a professional PDF.
-- 🔐 **User Authentication**: Secure JWT-based authentication.
-- 💾 **Local Storage**: Images and PDFs are stored locally for privacy and ease of setup.
-- 🎨 **Premium UI**: Beautiful, modern interface with Tailwind CSS and flipbook effects.
+- **Story Generation**: Describe your memory and AI creates a structured storybook using **Groq (Llama 3)**, **Google Gemini**, or **OpenAI**.
+- **AI Illustrations**: Generate comic-style panels using **Stable Diffusion XL** or **RealCartoonXL** via Hugging Face (Free!).
+- **Custom Avatars**: Upload photos to create personalized character avatars.
+- **Multiple Styles**: Choose from cartoon, anime, comic, realistic, watercolor, or sketch styles.
+- **PDF Export**: Download your storybook as a professional PDF.
+- **User Authentication**: Secure JWT-based authentication.
+- **Local Storage**: Images and PDFs are stored locally for privacy and ease of setup.
+- **Premium UI**: Beautiful, modern interface with Tailwind CSS and flipbook effects.
 
-## 🧠 Tech Stack
+## Tech Stack
 
 ### Frontend
 - **React 18** with Vite for fast development
@@ -47,7 +47,7 @@ Storyloom AI is a MERN-stack application that converts your personal memories an
 - **Google Generative AI** (Gemini) - *Optional*
 - **OpenAI** (GPT-4, DALL-E 3) - *Optional*
 
-## 📂 Project Structure
+## Project Structure
 
 ```
 storyloom-ai/
@@ -76,7 +76,7 @@ storyloom-ai/
 └── README.md
 ```
 
-## 🚀 Getting Started
+## Getting Started
 
 ### Prerequisites
 
@@ -177,7 +177,7 @@ storyloom-ai/
    - Backend API: http://localhost:5000
    - API Health Check: http://localhost:5000/api/health
 
-## 🎯 Usage Guide
+## Usage Guide
 
 ### Creating Your First Storybook
 
@@ -198,53 +198,3 @@ storyloom-ai/
 4. **Read & Export**
    - Flip through your storybook using the interactive reader.
    - Click "Build Storybook PDF" to download a high-quality PDF version.
-
-## 🔌 API Endpoints
-
-### Authentication
-- `POST /api/auth/register` - Register new user
-- `POST /api/auth/login` - Login user
-- `GET /api/auth/me` - Get current user protocol
-
-### Stories
-- `POST /api/story/generate` - Generate new story text
-- `GET /api/story` - Get all user stories
-- `GET /api/story/:id` - Get specific story
-
-### Panels & Avatars
-- `POST /api/panel/generate` - Generate single panel
-- `POST /api/avatar/generate` - Generate avatar from photo
-
-### Book
-- `POST /api/book/build` - Build PDF storybook
-
-## 🐛 Troubleshooting
-
-### Common Issues
-
-- **"Payload Too Large" on Upload**:
-  - Check your Nginx or specialized proxy settings if deploying.
-  - Local uploads are handled by Multer (limit is usually set in middleware).
-
-- **"Groq/OpenAI API Error"**:
-  - Verify your API keys in `backend/.env`.
-  - Check your usage limits on the provider's console.
-
-- **Images not loading**:
-  - Ensure the `backend/uploads` directory exists and has write permissions.
-  - Verify `FRONTEND_URL` matches your frontend address.
-
-## 🤝 Contributing
-
-Contributions are welcome! Please feel free to submit a Pull Request.
-
-## 📄 License
-
-This project is licensed under the ISC License.
-
-## 🙏 Acknowledgments
-
-- **Groq** for fast LLM inference
-- **Hugging Face** for accessible image generation models
-- **OpenAI** for pioneering generative AI
-- **MongoDB Atlas** for database hosting
