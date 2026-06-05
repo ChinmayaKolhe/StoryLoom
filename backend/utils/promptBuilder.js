@@ -1,85 +1,104 @@
 /**
  * Build prompts for different AI generation tasks
+ * Optimized for Google Gemini models
  */
 
 export const buildStoryPrompt = (userInput, theme, visualStyle) => {
-  return `You are a creative storytelling AI. Convert the following real-life memory into an engaging illustrated storybook.
+  return `You are a professional creative storytelling AI. Convert the following real-life memory into an engaging illustrated storybook.
 
 User's Memory: ${userInput}
 
 Theme: ${theme}
 Visual Style: ${visualStyle}
 
-IMPORTANT: Carefully identify ALL characters mentioned in the user's memory (their names, genders, ages, relationships, physical descriptions). Maintain these exact characters throughout the story.
+INSTRUCTIONS:
+1. Carefully identify ALL characters mentioned in the user's memory — their names, genders, ages, relationships, and physical descriptions.
+2. Maintain these exact characters consistently throughout ALL pages.
+3. Create a story breakdown with exactly 6-8 pages.
+4. Each scene description must be highly detailed and visual — imagine you are describing a painting to an artist.
 
-Please create a story breakdown with 6-8 pages. For each page, provide:
-1. Page number
-2. Scene description (MUST include specific details about the characters: their genders, approximate ages, clothing, and any distinguishing features mentioned in the memory)
-3. Dialogue (character speech)
-4. Narration (story text)
+For each page, provide:
+- pageNumber: Sequential page number (1, 2, 3...)
+- sceneDescription: Extremely detailed visual description including ALL characters with their specific characteristics (gender, age, appearance, clothing, body language, expressions, position in scene), environment details, lighting, mood, colors
+- dialogue: Character speech/dialogue for that scene (use empty string if no dialogue)
+- narration: Story narration text that advances the plot
 
-Format your response as a JSON array with this structure:
-[
-  {
-    "pageNumber": 1,
-    "sceneDescription": "Detailed visual description including ALL characters with their specific characteristics (gender, age, appearance)",
-    "dialogue": "Character dialogue if any",
-    "narration": "Story narration text"
-  }
-]
+CRITICAL RULES:
+- If the user mentions specific numbers of people (e.g., "4 girls and 1 boy"), EVERY scene MUST show exactly that many characters with correct genders.
+- If they mention "college friends", show young adults (18-22 years old), NOT children.
+- Each scene description should be vivid enough to generate a standalone illustration.
+- Keep narration engaging, emotional, and true to the user's memory.
 
-CRITICAL: If the user mentions "4 girls and 1 boy", EVERY scene must show 4 female characters and 1 male character. If they mention "college friends", show young adults (18-22 years old), NOT children or babies.
+OUTPUT FORMAT: Respond with ONLY a valid JSON object containing a "pages" array. No markdown, no code blocks, no extra text.
 
-Make the story engaging, emotional, and TRUE to the user's memory with ACCURATE character representation.`;
+{
+  "pages": [
+    {
+      "pageNumber": 1,
+      "sceneDescription": "Detailed visual description...",
+      "dialogue": "Character dialogue or empty string",
+      "narration": "Story narration text"
+    }
+  ]
+}`;
 };
 
 export const buildPanelPrompt = (sceneDescription, visualStyle, userInput = '') => {
   const styleGuide = {
-    cartoon: 'vibrant cartoon style with bold outlines and bright colors',
-    anime: 'anime/manga style with expressive eyes and dynamic poses',
-    comic: 'comic book style with dramatic shading and action lines',
-    realistic: 'realistic illustration with detailed textures',
-    watercolor: 'soft watercolor painting style with gentle colors',
-    sketch: 'hand-drawn sketch style with pencil textures'
+    cartoon: 'vibrant cartoon illustration with bold outlines, bright saturated colors, clean shapes, Disney/Pixar quality animation style',
+    anime: 'anime/manga art style with expressive large eyes, dynamic action poses, cel-shaded coloring, vibrant palette',
+    comic: 'professional comic book art with dramatic ink shading, bold black outlines, vivid panel colors, halftone texture',
+    realistic: 'photorealistic digital painting with detailed textures, natural cinematic lighting, hyper-detailed environment',
+    watercolor: 'soft watercolor painting style with gentle blended colors, wet-on-wet brushstroke textures, dreamy ethereal atmosphere',
+    sketch: 'detailed pencil sketch art with fine crosshatch shading, artistic graphite textures, hand-drawn quality'
   };
 
-  let prompt = `Create a ${styleGuide[visualStyle] || styleGuide.cartoon} illustration for a storybook panel.
+  let prompt = `Create a beautiful ${styleGuide[visualStyle] || styleGuide.cartoon} illustration for a storybook page.
 
-Scene: ${sceneDescription}`;
+SCENE TO ILLUSTRATE: ${sceneDescription}`;
 
   // Add original story context for character consistency
   if (userInput) {
-    prompt += `\n\nOriginal story context (for character accuracy): ${userInput.substring(0, 200)}`;
+    prompt += `
+
+STORY CONTEXT (for character accuracy): ${userInput.substring(0, 300)}`;
   }
 
-  prompt += `\n\nStyle requirements:
-- MAINTAIN EXACT character details from scene description (genders, ages, number of people)
-- If scene mentions "4 girls and 1 boy", show exactly 4 female and 1 male character
-- If scene mentions "college friends", show young adults (18-22 years), NOT children
-- Consistent character design across all panels
-- Clear composition and professional quality
-- Appropriate for storybook illustration
-- No text or speech bubbles in the image
-- High detail and vibrant colors`;
+  prompt += `
+
+STRICT REQUIREMENTS:
+- MAINTAIN EXACT character details from scene description (genders, ages, number of people, clothing)
+- If the scene mentions specific numbers of characters, show EXACTLY that many
+- If scene mentions young adults/college friends, show people aged 18-22, NOT children
+- Professional storybook illustration quality
+- Rich detailed background environment
+- Cinematic composition with clear focal point
+- Expressive character faces and body language
+- Vibrant, harmonious color palette
+- NO text, NO speech bubbles, NO watermarks, NO borders
+- Single cohesive scene, not multiple panels`;
 
   return prompt;
 };
 
 export const buildAvatarPrompt = (characterName, style) => {
-  return `Create a character avatar in ${style} style for a storybook character named ${characterName}. 
+  return `Create a character avatar illustration in ${style} style for a storybook character named "${characterName}". 
   
 The avatar should be:
-- Consistent and recognizable
-- Suitable for children's storybook
-- Expressive and friendly
-- Full body or portrait view
-- High quality illustration`;
+- Consistent and instantly recognizable
+- Expressive, warm and friendly appearance
+- Full body or 3/4 portrait view
+- High quality professional illustration
+- Clean, uncluttered composition
+- Suitable for a storybook character
+- Vibrant colors matching the ${style} art style
+- Clean white or simple gradient background`;
 };
 
 export const buildTitlePrompt = (userInput) => {
-  return `Based on this memory/story, suggest a creative and engaging title (max 6 words):
+  return `Based on this memory/story description, suggest a creative and emotionally engaging title (maximum 6 words).
 
-${userInput}
+Memory: ${userInput}
 
-Respond with ONLY the title, nothing else.`;
+Respond with ONLY the title text. No quotes, no punctuation, no explanation.`;
 };

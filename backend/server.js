@@ -47,6 +47,8 @@ app.get('/api/health', (req, res) => {
   res.json({ 
     status: 'OK', 
     message: 'Storyloom AI API is running',
+    aiProvider: process.env.AI_PROVIDER || 'gemini',
+    imageProvider: process.env.IMAGE_PROVIDER || 'gemini',
     timestamp: new Date().toISOString()
   });
 });
@@ -55,7 +57,7 @@ app.get('/api/health', (req, res) => {
 app.get('/', (req, res) => {
   res.json({
     message: 'Welcome to Storyloom AI API',
-    version: '1.0.0',
+    version: '2.0.0',
     endpoints: {
       auth: '/api/auth',
       story: '/api/story',
@@ -73,9 +75,18 @@ app.use(errorHandler);
 // Start server
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
-  console.log(`🚀 Server running on port ${PORT}`);
-  console.log(`📍 Environment: ${process.env.NODE_ENV || 'development'}`);
-  console.log(`🌐 Frontend URL: ${process.env.FRONTEND_URL || 'http://localhost:5173'}`);
+  const aiProvider = process.env.AI_PROVIDER || 'gemini';
+  const imageProvider = process.env.IMAGE_PROVIDER || 'gemini';
+  
+  console.log(`\n🚀 Storyloom AI Server v2.0`);
+  console.log(`━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━`);
+  console.log(`📍 Port:           ${PORT}`);
+  console.log(`🌍 Environment:    ${process.env.NODE_ENV || 'development'}`);
+  console.log(`🌐 Frontend URL:   ${process.env.FRONTEND_URL || 'http://localhost:5173'}`);
+  console.log(`🤖 AI Provider:    ${aiProvider.toUpperCase()} ${aiProvider === 'gemini' ? '(gemini-2.5-flash)' : ''}`);
+  console.log(`🎨 Image Provider: ${imageProvider.toUpperCase()} ${imageProvider === 'gemini' ? '(gemini-2.5-flash-image)' : ''}`);
+  console.log(`🔑 Gemini API:     ${process.env.GEMINI_API_KEY ? '✅ Configured' : '❌ Missing'}`);
+  console.log(`━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n`);
 });
 
 export default app;

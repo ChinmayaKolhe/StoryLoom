@@ -1,27 +1,9 @@
-import OpenAI from 'openai';
 import Avatar from '../models/Avatar.js';
 import { saveToLocal, ensureUploadsDir } from '../utils/cloudinary.js';
 import { buildAvatarPrompt } from '../utils/promptBuilder.js';
-import axios from 'axios';
+import { generateAvatarImage } from './imageService.js';
 import fs from 'fs';
 import path from 'path';
-
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY
-});
-
-/**
- * Download image from URL to local storage
- */
-const downloadImage = async (url, filename) => {
-  const { avatarsDir } = ensureUploadsDir();
-  const filepath = path.join(avatarsDir, filename);
-  
-  const response = await axios.get(url, { responseType: 'arraybuffer' });
-  fs.writeFileSync(filepath, response.data);
-  
-  return `/uploads/avatars/${filename}`;
-};
 
 /**
  * Generate avatar from uploaded photo using AI
@@ -43,25 +25,15 @@ export const generateAvatar = async (userId, filePath, style = 'cartoon', charac
       fs.unlinkSync(filePath);
     }
 
-    // For now, we'll use DALL-E to generate avatar
-    const prompt = buildAvatarPrompt(characterName, style);
-    
+    // Generate avatar using the configured image provider (Gemini/HuggingFace/OpenAI)
     let generatedImageUrl = originalImageUrl; // Fallback to original
 
     try {
-      const response = await openai.images.generate({
-        model: "dall-e-3",
-        prompt: prompt,
-        n: 1,
-        size: "1024x1024",
-        quality: "standard"
-      });
-
-      // Download DALL-E image to local storage
-      const dalleUrl = response.data[0].url;
-      generatedImageUrl = await downloadImage(dalleUrl, `avatar-${Date.now()}.png`);
+      console.log(`🎭 Generating avatar for "${characterName}" in ${style} style...`);
+      generatedImageUrl = await generateAvatarImage(characterName, style);
+      console.log(`✅ Avatar generated successfully!`);
     } catch (aiError) {
-      console.error('AI avatar generation failed, using original:', aiError.message);
+      console.error('⚠️ AI avatar generation failed, using original:', aiError.message);
     }
 
     // Create avatar in database
@@ -75,7 +47,7 @@ export const generateAvatar = async (userId, filePath, style = 'cartoon', charac
 
     return avatar;
   } catch (error) {
-    console.error('Avatar generation error:', error);
+    console.error('❌ Avatar generation error:', error);
     throw new Error('Failed to generate avatar: ' + error.message);
   }
 };
