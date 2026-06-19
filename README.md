@@ -1,4 +1,4 @@
-# 📚 Storyloom AI
+# Storyloom AI
 
 > Transform your real-life memories into beautiful illustrated storybooks using AI
 
@@ -12,19 +12,18 @@ Storyloom AI is a MERN-stack application that converts your personal memories an
 ![Image Gen](https://img.shields.io/badge/Images-Gemini%20%7C%20HuggingFace-yellow)
 ![Version](https://img.shields.io/badge/Version-2.0.0-purple)
 
-## ✨ Features
+## Features
 
-- 📝 **Story Generation**: Describe your memory and AI creates a structured storybook using **Google Gemini 2.5 Flash** (primary), **Groq (Llama 3.3)**, or **OpenAI GPT-4o-mini**.
-- 🎨 **AI Illustrations**: Generate comic-style panels using **Gemini 2.5 Flash Image Generation** (primary) or **Stable Diffusion XL** via HuggingFace.
-- 👤 **Custom Avatars**: Upload a photo to create personalized character avatars in your chosen art style.
-- 🎭 **Multiple Visual Styles**: Choose from `cartoon`, `anime`, `comic`, `realistic`, `watercolor`, or `sketch` styles.
-- 📖 **PDF Export**: Download your storybook as a professional PDF via PDFKit.
-- 🔐 **User Authentication**: Secure JWT-based authentication with bcrypt password hashing.
-- 💾 **Local File Storage**: Generated images and PDFs are stored locally in `backend/uploads/` for privacy and easy setup.
-- 🎨 **Premium UI**: Beautiful, modern interface with Tailwind CSS, Zustand state management, and flipbook reading effects.
-- ⚡ **Provider Fallback**: If the primary AI provider fails, the system automatically falls back to the next available provider.
+- 📝 **Story Generation**: Describe your memory and AI creates a structured storybook using **Groq (Llama 3)**, **Google Gemini**, or **OpenAI**.
+- 🎨 **AI Illustrations**: Generate comic-style panels using **Stable Diffusion XL** or **RealCartoonXL** via Hugging Face (Free!).
+- 👤 **Custom Avatars**: Upload photos to create personalized character avatars.
+- 🎭 **Multiple Styles**: Choose from cartoon, anime, comic, realistic, watercolor, or sketch styles.
+- 📖 **PDF Export**: Download your storybook as a professional PDF.
+- 🔐 **User Authentication**: Secure JWT-based authentication.
+- 💾 **Local Storage**: Images and PDFs are stored locally for privacy and ease of setup.
+- 🎨 **Premium UI**: Beautiful, modern interface with Tailwind CSS and flipbook effects.
 
-## 🧠 Tech Stack
+## Tech Stack
 
 ### Frontend
 | Technology | Purpose |
@@ -59,7 +58,7 @@ Storyloom AI is a MERN-stack application that converts your personal memories an
 | **HuggingFace** | Images (Fallback) | `stabilityai/stable-diffusion-xl-base-1.0` |
 | **OpenAI** | Text + Images (Optional) | `gpt-4o-mini` / `dall-e-3` |
 
-## 📂 Project Structure
+## Project Structure
 
 ```
 Storyloom/
@@ -120,7 +119,7 @@ Storyloom/
 └── README.md
 ```
 
-## 🚀 Getting Started
+## Getting Started
 
 ### Prerequisites
 
@@ -223,7 +222,7 @@ Storyloom/
    - ✅ Health Check: http://localhost:5000/api/health
    - 📖 API Root: http://localhost:5000/
 
-## 🎯 Usage Guide
+## Usage Guide
 
 ### Creating Your First Storybook
 
@@ -242,98 +241,55 @@ Storyloom/
    - Generation takes approximately 10–30 seconds per panel depending on the provider.
 
 4. **Read & Export**
-   - Flip through your storybook using the interactive page-flip reader.
-   - Click **"Build Storybook PDF"** to download a high-quality PDF version.
+   - Flip through your storybook using the interactive reader.
+   - Click "Build Storybook PDF" to download a high-quality PDF version.
 
 ## 🔌 API Endpoints
 
-### Authentication — `/api/auth`
-| Method | Endpoint | Auth | Description |
-|---|---|---|---|
-| `POST` | `/api/auth/register` | ❌ | Register new user |
-| `POST` | `/api/auth/login` | ❌ | Login user |
-| `GET` | `/api/auth/me` | ✅ | Get current user profile |
+### Authentication
+- `POST /api/auth/register` - Register new user
+- `POST /api/auth/login` - Login user
+- `GET /api/auth/me` - Get current user protocol
 
-### Stories — `/api/story`
-| Method | Endpoint | Auth | Description |
-|---|---|---|---|
-| `POST` | `/api/story/generate` | ✅ | Generate new story from memory |
-| `GET` | `/api/story` | ✅ | Get all stories for current user |
-| `GET` | `/api/story/:id` | ✅ | Get a specific story by ID |
-| `PUT` | `/api/story/:id/status` | ✅ | Update story status |
-| `DELETE` | `/api/story/:id` | ✅ | Delete a story |
+### Stories
+- `POST /api/story/generate` - Generate new story text
+- `GET /api/story` - Get all user stories
+- `GET /api/story/:id` - Get specific story
 
-### Panels — `/api/panel`
-| Method | Endpoint | Auth | Description |
-|---|---|---|---|
-| `POST` | `/api/panel/generate` | ✅ | Generate a single story panel image |
-| `POST` | `/api/panel/generate-all` | ✅ | Generate all panels for a story (async) |
-| `GET` | `/api/panel/status/:storyId` | ✅ | Get panel generation status |
+### Panels & Avatars
+- `POST /api/panel/generate` - Generate single panel
+- `POST /api/avatar/generate` - Generate avatar from photo
 
-### Avatars — `/api/avatar`
-| Method | Endpoint | Auth | Description |
-|---|---|---|---|
-| `POST` | `/api/avatar/generate` | ✅ | Generate avatar from uploaded photo |
-| `GET` | `/api/avatar` | ✅ | Get all avatars for current user |
-| `GET` | `/api/avatar/:id` | ✅ | Get a specific avatar |
-| `DELETE` | `/api/avatar/:id` | ✅ | Delete an avatar |
-
-### Book — `/api/book`
-| Method | Endpoint | Auth | Description |
-|---|---|---|---|
-| `POST` | `/api/book/build` | ✅ | Build and download PDF storybook |
-| `GET` | `/api/book/preview/:storyId` | ✅ | Get storybook preview data |
-
-### Utility
-| Method | Endpoint | Auth | Description |
-|---|---|---|---|
-| `GET` | `/api/health` | ❌ | API health check (shows active providers) |
-| `GET` | `/` | ❌ | API root info |
-
-## 🤖 AI Provider Configuration
-
-The application supports **runtime provider switching** via environment variables. No code changes needed.
-
-### Text Generation (`AI_PROVIDER`)
-
-| Value | Model | Notes |
-|---|---|---|
-| `gemini` *(default)* | `gemini-2.5-flash` | Best quality; auto-falls back to Groq on failure |
-| `groq` | `llama-3.3-70b-versatile` | Fast & free tier available |
-| `openai` | `gpt-4o-mini` | Requires paid OpenAI account |
-
-### Image Generation (`IMAGE_PROVIDER`)
-
-| Value | Model | Notes |
-|---|---|---|
-| `gemini` | `gemini-2.5-flash-preview-image-generation` | Native inline image generation; auto-falls back to HuggingFace |
-| `huggingface` *(default)* | `stabilityai/stable-diffusion-xl-base-1.0` | Free tier; ~25 inference steps |
-| `openai` | `dall-e-3` (1792×1024) | Highest quality; requires paid account |
+### Book
+- `POST /api/book/build` - Build PDF storybook
 
 ## 🐛 Troubleshooting
 
 ### Common Issues
 
-- **Images not loading after generation**
-  - Ensure `backend/uploads/panels/` and `backend/uploads/avatars/` exist with write permissions.
-  - Verify `FRONTEND_URL` in `backend/.env` matches your frontend address exactly.
+- **"Payload Too Large" on Upload**:
+  - Check your Nginx or specialized proxy settings if deploying.
+  - Local uploads are handled by Multer (limit is usually set in middleware).
 
-- **"No AI provider configured" error**
-  - At minimum, set `GEMINI_API_KEY` in `backend/.env`.
-  - Confirm `AI_PROVIDER=gemini` and `IMAGE_PROVIDER=gemini` (or `huggingface`) are set.
+- **"Groq/OpenAI API Error"**:
+  - Verify your API keys in `backend/.env`.
+  - Check your usage limits on the provider's console.
 
-- **Gemini image generation fails**
-  - The `gemini-2.5-flash-preview-image-generation` model may have rate limits or regional restrictions.
-  - Switch to `IMAGE_PROVIDER=huggingface` as a reliable free fallback.
+- **Images not loading**:
+  - Ensure the `backend/uploads` directory exists and has write permissions.
+  - Verify `FRONTEND_URL` matches your frontend address.
 
-- **"Payload Too Large" on photo upload**
-  - This is controlled by Multer in `backend/middleware/upload.js`.
-  - If using a reverse proxy (Nginx), increase `client_max_body_size`.
+## 🤝 Contributing
 
-- **MongoDB connection error**
-  - Verify your `MONGODB_URI` in `backend/.env` is correct.
-  - Ensure your IP address is whitelisted in MongoDB Atlas network access settings.
+Contributions are welcome! Please feel free to submit a Pull Request.
 
-- **JWT errors**
-  - Regenerate `JWT_SECRET` using: `node -e "console.log(require('crypto').randomBytes(64).toString('hex'))"`
+## 📄 License
 
+This project is licensed under the ISC License.
+
+## 🙏 Acknowledgments
+
+- **Groq** for fast LLM inference
+- **Hugging Face** for accessible image generation models
+- **OpenAI** for pioneering generative AI
+- **MongoDB Atlas** for database hosting
