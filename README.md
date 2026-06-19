@@ -14,14 +14,14 @@ Storyloom AI is a MERN-stack application that converts your personal memories an
 
 ## Features
 
-- 📝 **Story Generation**: Describe your memory and AI creates a structured storybook using **Groq (Llama 3)**, **Google Gemini**, or **OpenAI**.
-- 🎨 **AI Illustrations**: Generate comic-style panels using **Stable Diffusion XL** or **RealCartoonXL** via Hugging Face (Free!).
-- 👤 **Custom Avatars**: Upload photos to create personalized character avatars.
-- 🎭 **Multiple Styles**: Choose from cartoon, anime, comic, realistic, watercolor, or sketch styles.
-- 📖 **PDF Export**: Download your storybook as a professional PDF.
-- 🔐 **User Authentication**: Secure JWT-based authentication.
-- 💾 **Local Storage**: Images and PDFs are stored locally for privacy and ease of setup.
-- 🎨 **Premium UI**: Beautiful, modern interface with Tailwind CSS and flipbook effects.
+- **Story Generation**: Describe your memory and AI creates a structured storybook using **Groq (Llama 3)**, **Google Gemini**, or **OpenAI**.
+- **AI Illustrations**: Generate comic-style panels using **Stable Diffusion XL** or **RealCartoonXL** via Hugging Face (Free!).
+- **Custom Avatars**: Upload photos to create personalized character avatars.
+- **Multiple Styles**: Choose from cartoon, anime, comic, realistic, watercolor, or sketch styles.
+- **PDF Export**: Download your storybook as a professional PDF.
+- **User Authentication**: Secure JWT-based authentication.
+- **Local Storage**: Images and PDFs are stored locally for privacy and ease of setup.
+- **Premium UI**: Beautiful, modern interface with Tailwind CSS and flipbook effects.
 
 ## Tech Stack
 
@@ -129,7 +129,7 @@ Storyloom/
 
 | API Key | Purpose | Link |
 |---|---|---|
-| Google Gemini ⭐ | Text + Image generation (Primary) | [Get Key](https://aistudio.google.com/app/apikey) |
+| Google Gemini | Text + Image generation (Primary) | [Get Key](https://aistudio.google.com/app/apikey) |
 | Groq (Free) | Text fallback | [Get Key](https://console.groq.com/keys) |
 | HuggingFace (Free) | Image fallback | [Get Token](https://huggingface.co/settings/tokens) |
 | OpenAI (Paid) | Optional text + image | [Get Key](https://platform.openai.com/api-keys) |
@@ -217,10 +217,10 @@ Storyloom/
    ```
 
 6. **Access the Application**
-   - 🌐 Frontend: http://localhost:5173
-   - 🔌 Backend API: http://localhost:5000
-   - ✅ Health Check: http://localhost:5000/api/health
-   - 📖 API Root: http://localhost:5000/
+   - Frontend: http://localhost:5173
+   - Backend API: http://localhost:5000
+   - Health Check: http://localhost:5000/api/health
+   - API Root: http://localhost:5000/
 
 ## Usage Guide
 
@@ -263,33 +263,4 @@ Storyloom/
 ### Book
 - `POST /api/book/build` - Build PDF storybook
 
-## 🐛 Troubleshooting
-
-### Common Issues
-
-- **"Payload Too Large" on Upload**:
-  - Check your Nginx or specialized proxy settings if deploying.
-  - Local uploads are handled by Multer (limit is usually set in middleware).
-
-- **"Groq/OpenAI API Error"**:
-  - Verify your API keys in `backend/.env`.
-  - Check your usage limits on the provider's console.
-
-- **Images not loading**:
-  - Ensure the `backend/uploads` directory exists and has write permissions.
-  - Verify `FRONTEND_URL` matches your frontend address.
-
-## 🤝 Contributing
-
-Contributions are welcome! Please feel free to submit a Pull Request.
-
-## 📄 License
-
-This project is licensed under the ISC License.
-
-## 🙏 Acknowledgments
-
-- **Groq** for fast LLM inference
-- **Hugging Face** for accessible image generation models
-- **OpenAI** for pioneering generative AI
-- **MongoDB Atlas** for database hosting
+* for database hosting
