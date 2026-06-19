@@ -4,14 +4,6 @@
 
 Storyloom AI is a MERN-stack application that converts your personal memories and experiences into professionally illustrated storybooks. Simply describe your memory, upload photos for personalized avatars, and let AI create a magical storybook complete with illustrations and a downloadable PDF.
 
-![MERN Stack](https://img.shields.io/badge/Stack-MERN-green)
-![React](https://img.shields.io/badge/React-18.2-blue)
-![Node.js](https://img.shields.io/badge/Node.js-Express-green)
-![MongoDB](https://img.shields.io/badge/MongoDB-Atlas-brightgreen)
-![AI](https://img.shields.io/badge/AI-Gemini%20%7C%20Groq%20%7C%20OpenAI-orange)
-![Image Gen](https://img.shields.io/badge/Images-Gemini%20%7C%20HuggingFace-yellow)
-![Version](https://img.shields.io/badge/Version-2.0.0-purple)
-
 ## Features
 
 - **Story Generation**: Describe your memory and AI creates a structured storybook using **Groq (Llama 3)**, **Google Gemini**, or **OpenAI**.
